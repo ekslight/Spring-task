@@ -32,7 +32,7 @@ public class ApplicationService {
 
         BigDecimal residue = sender.getMoneyAmount().subtract(amount);
         if (residue.compareTo(ZERO) < 0) {
-            throw new NotEnoughFundsException(sender, amount);
+            throw new NotEnoughFundsException(amount, sender.getMoneyAmount());
         }
 
         sender.setMoneyAmount(residue);
@@ -56,7 +56,7 @@ public class ApplicationService {
 
         BigDecimal residue = account.getMoneyAmount().subtract(amount);
         if (residue.compareTo(ZERO) < 0) {
-            throw new NotEnoughFundsException(account, amount);
+            throw new NotEnoughFundsException(amount, account.getMoneyAmount());
         }
 
         account.setMoneyAmount(residue);

@@ -1,7 +1,10 @@
 package net.semenovs.test.rest;
 
+import javax.validation.constraints.NotEmpty;
+
 public class CreateAccountRequest {
 
+    @NotEmpty
     private String userName;
 
     public String getUserName() {

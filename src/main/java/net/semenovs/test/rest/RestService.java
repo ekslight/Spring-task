@@ -5,11 +5,7 @@ import net.semenovs.test.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,7 +21,7 @@ public class RestService {
 
     @ResponseBody
     @RequestMapping(value = "createAccount", method = RequestMethod.POST)
-    public ResponseEntity<CommonResponse> createAccount(@RequestBody CreateAccountRequest param) {
+    public ResponseEntity<CommonResponse> createAccount(@Valid @RequestBody CreateAccountRequest param) {
         Account account = service.createAccount(param.getUserName());
         CommonResponse response = new CommonResponse(CommonResponse.Status.SUCCESS, account);
         response.setMessage(String.format("Account created: [%s]", account.getUserName()));
@@ -34,7 +30,7 @@ public class RestService {
 
     @ResponseBody
     @RequestMapping(value = "transfer", method = RequestMethod.POST)
-    public ResponseEntity<CommonResponse> transfer(@RequestBody TransferRequest request) {
+    public ResponseEntity<CommonResponse> transfer(@Valid @RequestBody TransferRequest request) {
         Account account = service
                 .transfer(request.getSenderUserName(), request.getReceiverUserName(), request.getAmount());
         CommonResponse response = new CommonResponse(CommonResponse.Status.SUCCESS, account);
@@ -57,7 +53,7 @@ public class RestService {
 
     @ResponseBody
     @RequestMapping(value = "withdraw", method = RequestMethod.POST)
-    public ResponseEntity<CommonResponse> withdraw(@RequestBody AccountRequest request) {
+    public ResponseEntity<CommonResponse> withdraw(@Valid @RequestBody AccountRequest request) {
         Account account = service.withdraw(request.getUserName(), request.getAmount());
         String message = String.format("Cash withdrawal: [%s]", request.getAmount());
         CommonResponse response = new CommonResponse(CommonResponse.Status.SUCCESS, account);
